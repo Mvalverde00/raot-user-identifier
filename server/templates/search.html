@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %} RAoT Name Lookup {% endblock %}
+
+{% block content %}
+
+<h1> RAoT Name Lookup </h1>
+
+<div id="error-display"></div>
+
+<form id="main-form">
+  <label for="uuid">Player's UUID</label>
+  <input name="text" id="uuid" minlength="32" maxlength="32" size="32" required>
+  <input type="submit" value="Lookup UUID">
+</form>
+
+<div id="results-div">
+
+  <p id="results-header-p"></p>
+  <table id="results-table">
+    <thead>
+      <tr>
+        <th> Username </th>
+        <th> Playtime (seconds) </th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  document.addEventListener("submit", (e) => {
+    const form = e.target;
+    if (form.id != "main-form") return;
+
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const uuid = data["uuid"];
+    const url = "/user/" + uuid;
+
+    fetch(url, {method: "GET"}).then(function(response) {
+      if (!response.ok) {
+        document.getElementById("error-display").innerHTML = response.statusText;
+      }
+      return response.json();
+    }).then(function(json) {
+      console.log(json);
+    }).catch(function() {
+      console.log("Error fetching results, please check internet connection and try again.");
+    });
+
+  });
+</script>
+
+{% endblock %}

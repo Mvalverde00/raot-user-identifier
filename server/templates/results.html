@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} RAoT Name Lookup {% endblock %}
+
+{% block content %}
+
+<h1> RAoT Name Lookup </h1>
+
+<table>
+  <tr>
+    <td> Username </td>
+    <td> Playtime (seconds) </td>
+  </tr>
+  {% for entry in entries %}
+    <tr>
+      <td> entry.username </td>
+      <td> entry.duration </td>
+    </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}
